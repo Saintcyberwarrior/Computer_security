@@ -16,8 +16,8 @@ state = p.factory.entry_state()
 #Now create a simulation_manager
 sm = p.factory.simulation_manager(state)
 
-#Put a condition on program to stop once it ncounter a syscall
+#Put a condition on program to stop once it encounter a syscall
+sm.run(until=lambda sm: sm.is_simprocedure==True)
 
-sm.run(until=lambda sm )
-
-:
+#condition to check if there is any branching
+sm.run(until=lambda sm_:len(sm_.active)>1)
