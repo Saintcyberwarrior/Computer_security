@@ -28,6 +28,7 @@ sm.run(until=lambda sm_:len(sm_.active)>1)
 def syscall_func(state):
 	print('the syscall made now was', state.inspect.syscall_name)
 
+
 def call_func(state):
 	print('the address of function called is: ', state.inspect.function_address)
 
@@ -46,3 +47,20 @@ state.inspect.b('exit', when=angr.BP_BEFORE, action = exit_func)
 ##############################So, so this way we can isolate the states of our interest############
 
 ##Now, put them in a loop###
+
+cfg = p.analyses.CFGFast()
+entry_node = cfg.get_any_node(p.entry)
+
+node = entry_node
+for (entry_node!= deadended): #TODO: there is some error here, check once
+	for i in len(node.successors):
+		succ_addr = node.successors[i].addr
+		is_sys = node.successors[i].is_syscall
+		is_simproc = node.successors[i].is_simprocedure
+		has_ret = node.successors[i].has_return
+
+
+#TODO: combine all the nodes which are not syscalls or doesn't branch, or is not one of the deadends.
+#def my_combine(cfg):
+#TODO: check again and remove the paths that doesn't contain any syscall
+#def my_cleanup(cfg):
